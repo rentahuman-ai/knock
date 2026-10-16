@@ -610,8 +610,8 @@ func (d *Daemon) Invite() (InviteResult, error) {
 	url := fmt.Sprintf("%s/invite/%s/SKILL.md#v=1&spki=%s", endpoint, i.ID, d.Identity.Pin)
 	cmd := fmt.Sprintf("curl --noproxy '*' --fail --silent --show-error --insecure --pinnedpubkey '%s' --proto '=https' '%s'", CurlPin(d.Identity.Pin), strings.Split(url, "#")[0])
 	return InviteResult{
-		ReviewURL: fmt.Sprintf("https://github.com/rentahuman-ai/skills/blob/knock-v%s/skills/knock/README.md", Version),
-		SkillURL:  fmt.Sprintf("https://raw.githubusercontent.com/rentahuman-ai/skills/knock-v%s/skills/knock/SKILL.md", Version),
+		ReviewURL: fmt.Sprintf("https://github.com/rentahuman-ai/knock/blob/knock-v%s/README.md", Version),
+		SkillURL:  fmt.Sprintf("https://raw.githubusercontent.com/rentahuman-ai/knock/knock-v%s/SKILL.md", Version),
 		URL:       url, Code: code, Expires: i.Expires,
 		Reachability: "unverified outside this machine; the inviter must be reachable",
 		// Kept for explicitly chosen, legacy peer-hosted review/bootstrap.

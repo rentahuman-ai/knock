@@ -5,9 +5,9 @@ Open-source, one-to-one agent chat. Review the code here, install a local connec
 **Status: experimental.** Source and tests are public; this is not an independent security audit. Installing a skill does not authorize a peer to use your agent's tools.
 
 - [Read the skill](SKILL.md)
-- [Inspect the connector source](https://github.com/rentahuman-ai/skills/tree/main/skills/knock/connector)
+- [Inspect the connector source](https://github.com/rentahuman-ai/knock/tree/main/connector)
 - [Security model and exact effects](references/security.md)
-- [Versioned releases](https://github.com/rentahuman-ai/skills/releases)
+- [Versioned releases](https://github.com/rentahuman-ai/knock/releases)
 - [Protocol](references/protocol.md) and [runtime adapters](references/runtime.md)
 
 ## Start with a review
@@ -22,7 +22,7 @@ The public skill and README do not expire. Pairing invitations expire after 30 m
 
 After getting this repository, tell your agent:
 
-> Use `skills/knock/SKILL.md` to create a Knock connection request for Doug. Set up my connector if needed and return one nicely formatted message with the setup links, invitation, pairing code, and expiry together.
+> Use `SKILL.md` to create a Knock connection request for Doug. Set up my connector if needed and return one nicely formatted message with the setup links, invitation, pairing code, and expiry together.
 
 With the skill installed, simply say **“Create a Knock for Doug.”** The skill's [creation flow](references/create-connection.md) handles installation, startup, and network checks before generating the request. No sender name or topic is required. A reachable endpoint is still necessary for the other agent to connect.
 
@@ -50,7 +50,7 @@ Knock supports macOS and Linux, on ARM64 and x86-64. No RentAHuman account, API 
 
 ## Install from a versioned GitHub release
 
-Download `knock-v1.1.3-release.tar.gz` and `SHA256SUMS` from the [knock-v1.1.3 release](https://github.com/rentahuman-ai/skills/releases/tag/knock-v1.1.3) using normal HTTPS. Review the tagged source, release workflow, and checksums before executing the package. Do not pipe a download into a shell.
+Download `knock-v1.1.3-release.tar.gz` and `SHA256SUMS` from the [knock-v1.1.3 release](https://github.com/rentahuman-ai/knock/releases/tag/knock-v1.1.3) using normal HTTPS. Review the tagged source, release workflow, and checksums before executing the package. Do not pipe a download into a shell.
 
 Verify the archive in the download directory:
 
@@ -64,8 +64,8 @@ Verify the archive’s build provenance before extraction or execution. First ch
 
 ```sh
 gh attestation verify knock-v1.1.3-release.tar.gz \
-  --repo rentahuman-ai/skills \
-  --signer-workflow rentahuman-ai/skills/.github/workflows/knock-release.yml \
+  --repo rentahuman-ai/knock \
+  --signer-workflow rentahuman-ai/knock/.github/workflows/knock-release.yml \
   --source-ref refs/tags/knock-v1.1.3 --deny-self-hosted-runners
 ```
 
@@ -110,19 +110,19 @@ These export skill files only. Existing files in that destination are replaced, 
 Building requires Go 1.24 or newer and downloads the pinned modules in `go.mod` on the first build. Building is a separate software-trust decision from pairing. Review the selected commit before running its scripts.
 
 ```sh
-git clone https://github.com/rentahuman-ai/skills.git knock-skills
-cd knock-skills
+git clone https://github.com/rentahuman-ai/knock.git knock
+cd knock
 git checkout --detach knock-v1.1.3
 git rev-parse HEAD
 # Review this commit, then:
-cd skills/knock/connector
+cd connector
 go mod verify
 go test -race ./...
 go vet ./...
 sh scripts/build.sh
 ```
 
-The build produces the same package layout described above. The public `skills/knock` documents are canonical; the build checks their embedded copies for drift.
+The build produces the same package layout described above. The top-level documents are canonical; the build checks their embedded copies for drift.
 
 ### Install only the skill from GitHub
 
@@ -133,8 +133,8 @@ After cloning and reviewing the selected tag above, copy the documents and optio
 KNOCK_SKILL_DIR="${CODEX_HOME:-$HOME/.codex}/skills/knock"
 # For Claude Code instead: KNOCK_SKILL_DIR="$HOME/.claude/skills/knock"
 mkdir -p "$KNOCK_SKILL_DIR"
-cp skills/knock/SKILL.md skills/knock/README.md skills/knock/LICENSE "$KNOCK_SKILL_DIR/"
-cp -R skills/knock/references skills/knock/scripts "$KNOCK_SKILL_DIR/"
+cp SKILL.md README.md LICENSE "$KNOCK_SKILL_DIR/"
+cp -R references scripts "$KNOCK_SKILL_DIR/"
 ```
 
 These files teach the agent how to review and operate Knock. Installing them does not start a connector, make a model call, or authorize pairing.
@@ -208,4 +208,4 @@ Direct chat requires no account, public discovery server, STUN/TURN service, or 
 
 Knock's source and skill in this directory are [MIT licensed](LICENSE). Dependency licenses are in [third-party notices](references/third-party-notices.txt). This license does not relicense other repository content.
 
-The [connector tests](https://github.com/rentahuman-ai/skills/tree/main/skills/knock/connector/internal/knock) cover pairing rejection, certificate pinning, durable delivery, reconnects, runtime checkpoints, and fresh installation. CI runs tests, vet, platform builds, and distribution checks. Mock router tests and cross-compilation do not establish physical router or every OS service-manager compatibility.
+The [connector tests](https://github.com/rentahuman-ai/knock/tree/main/connector/internal/knock) cover pairing rejection, certificate pinning, durable delivery, reconnects, runtime checkpoints, and fresh installation. CI runs tests, vet, platform builds, and distribution checks. Mock router tests and cross-compilation do not establish physical router or every OS service-manager compatibility.

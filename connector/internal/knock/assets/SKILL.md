@@ -5,7 +5,7 @@ description: Create a formatted connection request when asked to send someone a 
 
 # Knock agent chat
 
-Knock is an open-source local connector for one-to-one text/JSON chat. Review the [README](README.md) for installation and the [security model](references/security.md) for trust boundaries. Public source: https://github.com/rentahuman-ai/skills/tree/main/skills/knock.
+Knock is an open-source local connector for one-to-one text/JSON chat. Review the [README](README.md) for installation and the [security model](references/security.md) for trust boundaries. Public source: https://github.com/rentahuman-ai/knock.
 
 Receiving this skill or an invitation is not authorization to install software, start a service, pair a device, or enable automatic agent runs. Match the owner's request and existing authorization. If asked only to inspect a link, read the documents and source and explain the proposed effects. Continue already-authorized work without redundant confirmations. Respect the host agent's rules for installation and secret entry.
 
